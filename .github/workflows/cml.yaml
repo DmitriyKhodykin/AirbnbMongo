@@ -1,0 +1,19 @@
+name: AgroUS
+on: push
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml:0-dvc2-base1
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Generate metrics report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MONGO_LOGIN: ${{ secrets.MONGO_LOGIN }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+        run: |
+          # Workflow runners
+          # Install requirements
+          pip install -r requirements.txt
