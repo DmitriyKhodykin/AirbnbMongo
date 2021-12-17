@@ -1,13 +1,12 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/search')
 def get_request():
-    table_request = request.form
-    return render_template('index.html', prediction_text='Sssss')
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
