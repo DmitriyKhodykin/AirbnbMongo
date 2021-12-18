@@ -11,11 +11,11 @@ def index():
 @app.route('/search', methods=['post', 'get'])
 def get_request():
     if request.method == 'POST':
-        country = request.form.get('country')  # запрос к данным формы
+        country = request.form.get('country')  # Get data from form
         city = request.form.get('city')
     else:
-        country = 'Country'
-        city = 'City'
+        country = ''
+        city = ''
     return render_template('search.html', output_text=f'{country} {city}')
 
 
