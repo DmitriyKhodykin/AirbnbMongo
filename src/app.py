@@ -1,11 +1,22 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 
-@app.route('/search')
-def get_request():
+@app.route('/')
+def index():
     return render_template('index.html')
+
+
+@app.route('/search', methods=['post', 'get'])
+def get_request():
+    if request.method == 'POST':
+        country = request.form.get('country')  # запрос к данным формы
+        city = request.form.get('city')
+    else:
+        country = 'Country'
+        city = 'City'
+    return render_template('search.html', output_text=f'{country} {city}')
 
 
 if __name__ == '__main__':
