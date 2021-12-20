@@ -31,7 +31,6 @@ class Collection:
 
     def query(self):
         """
-        s
         Process requests to the document base.
         Man: https://docs.mongodb.com/manual/tutorial/query-documents/
         """
