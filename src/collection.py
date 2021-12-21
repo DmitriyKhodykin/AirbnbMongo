@@ -29,16 +29,18 @@ class Collection:
         cursor = client.get_database(self.db_name)
         self.collection = cursor[collection_name]
 
-    def query(self):
+    def query(self, request: dict):
         """
         Process requests to the document base.
         Man: https://docs.mongodb.com/manual/tutorial/query-documents/
         """
-        select_all = self.collection.find({"price": {"$gte": 1000}})
-        for i in select_all:
+        response = self.collection.find(request)
+        for i in response:
             print(i)
 
 
 if __name__ == '__main__':
     collection = Collection()
-    collection.query()
+    collection.query(
+        {"images.picture_url": {"$size": 20}}
+    )
