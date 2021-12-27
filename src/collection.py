@@ -10,6 +10,7 @@ Create environment variables:
 
 import os
 
+import pandas
 from pymongo import MongoClient
 
 
@@ -29,12 +30,12 @@ class Collection:
         cursor = client.get_database(self.db_name)
         self.collection = cursor[collection_name]
 
-    def query(self, request: dict):
+    def query(self, *args, **kwargs):
         """
         Process requests to the document base.
         Man: https://docs.mongodb.com/manual/tutorial/query-documents/
         """
-        response = self.collection.find(request)
+        response = self.collection.find(*args, **kwargs)
         for i in response:
             print(i)
 
@@ -42,5 +43,5 @@ class Collection:
 if __name__ == '__main__':
     collection = Collection()
     collection.query(
-        {"images.picture_url": {"$size": 20}}
+        {}, {"bedrooms": 1, "summary": 1}
     )
