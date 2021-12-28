@@ -30,18 +30,28 @@ class Collection:
         cursor = client.get_database(self.db_name)
         self.collection = cursor[collection_name]
 
-    def query(self, *args, **kwargs):
+    def query(self, *args, **kwargs) -> pandas.DataFrame:
         """
         Process requests to the document base.
         Man: https://docs.mongodb.com/manual/tutorial/query-documents/
         """
-        response = self.collection.find(*args, **kwargs)
-        for i in response:
-            print(i)
+        response = self.collection.find({}, *args, **kwargs)
+        result_data = pandas.DataFrame({})
+        for item in response:
+            result_data = result_data.append(
+                item,
+                ignore_index=True
+            )
+
+        print(result_data.head())
+        return result_data
 
 
 if __name__ == '__main__':
     collection = Collection()
     collection.query(
-        {}, {"bedrooms": 1, "summary": 1}
+        {"address": {"country": 1, "market": 1},
+         "beds": 1,
+         "price": 1,
+         "summary": 1}
     )
